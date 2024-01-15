@@ -21,15 +21,5 @@ engine = create_engine(
     SQLALCHEMY_DATABASE_URL
 )
 
-'''
-## 테이블에 대한 모델을 정의할 필요가 없다고 판단됨
-# 기존 테이블을 자동으로 매핑
-Base = automap_base()
-Base.prepare(engine, reflect=True)
-
-# 각 테이블에 대한 모델 생성
-F150_open_tbl = Base.classes.f150_open_tbl
-'''
-
 # SQLAlchemy 세션 생성
 SessionLocal = Session(engine)
