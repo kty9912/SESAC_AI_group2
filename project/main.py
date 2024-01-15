@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.templating import Jinja2Templates
-# from pydantic import BaseModel, Field
 from database import SessionLocal
 from sqlalchemy.orm import Session
 import pandas as pd
