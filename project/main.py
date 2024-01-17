@@ -2,10 +2,12 @@ from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.templating import Jinja2Templates
 from database import SessionLocal
 from sqlalchemy.orm import Session
+from fastapi.staticfiles import StaticFiles
 import pandas as pd
 
 app = FastAPI()
 templates = Jinja2Templates(directory = "templates")
+app.mount("/static", StaticFiles(directory="templates"), name="static")
 
 def get_db():
     db = SessionLocal()
@@ -17,7 +19,8 @@ def get_db():
 # nl2sql 모델을 이용하여 질문에 해당하는 쿼리문 가져오는 함수
 def generate_sql_query(question: str):
     
-    sql_query = "question 결과값"
+    # question 결과값
+    sql_query = "SELECT * FROM f150_open_tbl;"
 
     return sql_query
 
@@ -46,16 +49,16 @@ def execute_sql_query(db: Session, sql_query: str):
 def read_homepage(request: Request):
         
         return templates.TemplateResponse(
-            "main.html", {
+            "web4.html", {
                 "request": request
             }
         )
 
 # 새 게시판 글 저장
-@app.post("/acquery/question")
-def new_post_post(request: Request, db: Session = Depends(get_db)):
+@app.post("/acquery/question/")
+async def new_question(request: Request, db: Session = Depends(get_db)):
     try:
-        data = request.json()
+        data = await request.json()
         question = data["question"]
 
         # nl2sql 모델로 question을 보내서 쿼리문을 받아옴

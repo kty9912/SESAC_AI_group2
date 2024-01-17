@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 import json
+import os
 
-with open("config.json", "r") as config_file:
+with open(os.path.join("config.json"), "r") as config_file:
     config_data = json.load(config_file)
 
 # PostgreSQL 연결 정보
@@ -22,4 +23,4 @@ engine = create_engine(
 )
 
 # SQLAlchemy 세션 생성
-SessionLocal = Session(engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
