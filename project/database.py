@@ -19,21 +19,11 @@ DATABASE_NAME = config_data["DATABASE_NAME"]
 SQLALCHEMY_DATABASE_URL = f"postgresql+asyncpg://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 
 # SQLAlchemy 엔진 생성
-'''
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL
-)
-'''
-
-
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL
 )
 
-
-
 # SQLAlchemy 세션 생성
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 async_session = sessionmaker(
     bind=engine,
     class_=AsyncSession,
