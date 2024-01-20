@@ -1,1 +1,9 @@
 config.json
+
+*.ini
+
+migrations/
+
+templates/
+
+__pycache__/
