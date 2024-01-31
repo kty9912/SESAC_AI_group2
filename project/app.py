@@ -1,12 +1,26 @@
 import streamlit as st
 import requests
+import pandas as pd
 
 fastapi_url = "http://127.0.0.1:8000/"
 
 response = requests.get(fastapi_url)
 
 # 타이틀
-st.image('templates/로고2.png')
+st.image('templates/로고2.png', use_column_width=True, width=st.sidebar.width)
+
+# 이미지 파일의 경로
+image_path = 'templates/로고2.png'
+
+# CSS 스타일을 사용하여 이미지를 가운데 정렬하면서 원본 비율로 유지하고 컬럼의 너비에 맞게 표시
+st.markdown(
+    f"""
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <img src="{image_path}" style="max-width: 100%; max-height: 100%; object-fit: contain;" alt="Your Image">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # 주의사항
 st.info('데이터 환경에 따라 쿼리 생성 후 데이터 추출 과정에서 오류가 발생할 수 있습니다.')
@@ -33,9 +47,9 @@ if submit_button:
 
             # 결과
             st.subheader('결과 데이터')
-            st.text_area("Result Data:", result['result_data'])
+            result_data = pd.DataFrame(result['result_data'])
+            st.table(result_data)
 
-            st.success("Item created")
         else:
             st.error(f"Failed to create item. Status code: {response.status_code}")
 
