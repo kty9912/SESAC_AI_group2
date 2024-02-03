@@ -14,7 +14,7 @@ if st.button("Generate SQL Query"):
     # 결과를 출력
     if response.status_code == 200:
         result = response.json()
-        st.text(f"Generated SQL Query: {result['query']}")
-        #st.table(pd.DataFrame(result['result_data']))
+        #st.text(f"Generated SQL Query: {result['query']}")
+        st.code(f"Generated SQL Query: {result['query']}", language='sql')
     else:
         st.text("Error generating SQL query.")
